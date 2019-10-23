@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">test_tab_bottom</string>
+    <string name="title_home">홈</string>
+    <string name="title_notifications">공지</string>
+    <string name="title_dashboard">카테고리</string>
+    <string name="title_account">계정</string>
+</resources>
