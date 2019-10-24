@@ -13,32 +13,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentHome fragmentHome = new FragmentHome();
     private FragmentCategory fragmentCategory = new FragmentCategory();
     private FragmentAccount fragmentAccount = new FragmentAccount();
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_account);
-                    return true;
-            }
-            return false;
-        }
-    };
 
 
 
@@ -52,10 +33,29 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        mTextMessage = findViewById(R.id.message);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
     }
 
+    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+            switch(menuItem.getItemId())
+            {
+                case R.id.navigation_home:
+                    transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss();
+
+                    break;
+                case R.id.navigation_dashboard:
+                    transaction.replace(R.id.frameLayout, fragmentCategory).commitAllowingStateLoss();
+                    break;
+                case R.id.navigation_notifications:
+                    transaction.replace(R.id.frameLayout, fragmentAccount).commitAllowingStateLoss();
+                    break;
+            }
+            return true;
+        }
+    }
 
 }
